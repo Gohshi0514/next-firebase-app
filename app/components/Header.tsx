@@ -16,7 +16,7 @@ export default function Header() {
         <nav>
           {status === 'authenticated' ? (
             <div className="flex items-center space-x-4">
-              <span className="text-gray-600">
+              <span className="text-gray-600 hidden md:block">
                 ようこそ、{session.user?.email || 'ゲスト'}さん
               </span>
               <Button
