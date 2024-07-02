@@ -96,7 +96,7 @@ This dual approach allows for flexible authentication options while leveraging N
 
 ## License
 
-This project is licensed under the [Super Friendly "Go Ahead and Use It" License](LICENSE.md).
+This project is licensed under the [Super Friendly "Go Ahead and Use It" License](LICENSE).
 
 ## Acknowledgements
 
@@ -203,7 +203,7 @@ npm run dev
 
 ## ライセンス
 
-このプロジェクトは[超フレンドリー・ご自由にどうぞライセンス](LICENSE.md)の下でライセンスされています。
+このプロジェクトは[超フレンドリー・ご自由にどうぞライセンス](LICENSE)の下でライセンスされています。
 
 ## 謝辞
 
