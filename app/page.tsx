@@ -165,7 +165,7 @@ export default function Home() {
                     ログイン
                   </Button>
                   <Button
-                    onClick={() => router.push("/signin")}
+                    onClick={() => router.push("/register")}
                     variant="outline"
                     className="w-full"
                   >
