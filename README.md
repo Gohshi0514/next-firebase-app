@@ -80,13 +80,9 @@ The application will be available at `http://localhost:4321`.
 - [React Hook Form](https://react-hook-form.com/)
 - [Zod](https://github.com/colinhacks/zod)
 
-## Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/yourusername/next-auth-firebase/issues).
-
 ## License
 
-This project is licensed under the [Super Friendly "Go Ahead and Use It" License](LICENSE).
+This project is licensed under the [Super Friendly "Go Ahead and Use It" License](LICENSE.md).
 
 ## Acknowledgements
 
