@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/core": "^0.34.1",
+    "@auth/firebase-adapter": "^2.4.1",
     "@hookform/resolvers": "^3.6.0",
     "@next-auth/firebase-adapter": "^2.0.1",
     "@radix-ui/react-label": "^2.1.0",
