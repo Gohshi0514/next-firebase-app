@@ -1,113 +1,132 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+// 仮の記事データ
+const articles = [
+  {
+    id: 6,
+    title: "Reactの新機能",
+    description: "Reactの最新の機能を使った開発手法を紹介します。",
+  },
+  {
+    id: 7,
+    title: "整骨院の基礎",
+    description: "整骨院での治療方法とその効果を紹介します。",
+  },
+  {
+    id: 8,
+    title: "鍼灸治療の効果",
+    description: "鍼灸治療がもたらす健康効果を解説します。",
+  },
+  {
+    id: 9,
+    title: "交通事故後の整骨院治療",
+    description: "交通事故後のリハビリにおける整骨院の役割について説明します。",
+  },
+  {
+    id: 10,
+    title: "脊柱管狭窄症と鍼灸",
+    description:
+      "脊柱管狭窄症に対する鍼灸治療の効果とそのメカニズムを紹介します。",
+  },
+  {
+    id: 11,
+    title: "産後の骨盤矯正",
+    description: "産後の骨盤矯正の重要性と整骨院での施術方法を解説します。",
+  },
+  {
+    id: 12,
+    title: "猫背と姿勢矯正",
+    description: "猫背矯正のための整骨院でのアプローチ方法を紹介します。",
+  },
+  {
+    id: 13,
+    title: "M&Aによる整骨院の未来",
+    description: "整骨院業界におけるM&Aの現状と将来展望を探ります。",
+  },
+  {
+    id: 14,
+    title: "整骨院と整体院の違い",
+    description: "整骨院と整体院の違いについて解説します。",
+  },
+  {
+    id: 15,
+    title: "整骨院での肩こり治療",
+    description: "肩こりに対する整骨院での治療方法とその効果を説明します。",
+  },
+];
 
 export default function Home() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      setShowLoginPrompt(true);
+    }
+  }, [status]);
+
+  if (status === "loading") {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">最新の記事</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+        {articles.map((article) => (
+          <Card
+            key={article.id}
+            className="hover:shadow-lg transition-shadow duration-300"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+            <CardHeader>
+              <CardTitle>{article.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>{article.description}</CardDescription>
+            </CardContent>
+          </Card>
+        ))}
+        {!session && (
+          <div className="absolute inset-0 backdrop-blur-md bg-white/30 flex flex-col justify-center items-center">
+            <Card className="w-full max-w-md text-center">
+              <CardHeader>
+                <CardTitle>ログインして記事を読む</CardTitle>
+                <CardDescription>
+                  会員登録すると、すべての記事を無料で読むことができます。
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button onClick={() => router.push("/signin")} className="mr-4">
+                  ログイン
+                </Button>
+                <Button
+                  onClick={() => router.push("/signup")}
+                  variant="outline"
+                >
+                  新規登録
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
